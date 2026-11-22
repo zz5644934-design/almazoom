@@ -69,7 +69,7 @@ final class ProcessingOverlay {
         View view = findTarget();
         Rect bounds = new Rect();
         if (view == null || !view.getGlobalVisibleRect(bounds) || bounds.isEmpty()) {
-            XposedBridge.log("AlmaLens spoiler: gallery thumbnail not found or not visible");
+            XposedBridge.log("AlmaZoom spoiler: gallery thumbnail not found or not visible");
             logCandidates();
             return;
         }
@@ -93,7 +93,7 @@ final class ProcessingOverlay {
         spoiler.start();
         handler.removeCallbacks(timeout);
         handler.postDelayed(timeout, TIMEOUT_MS);
-        XposedBridge.log("AlmaLens spoiler shown on " + bounds.width() + "x" + bounds.height()
+        XposedBridge.log("AlmaZoom spoiler shown on " + bounds.width() + "x" + bounds.height()
                 + " shader=" + spoiler.usesShader());
     }
 
@@ -101,7 +101,7 @@ final class ProcessingOverlay {
     private void logCandidates() {
         if (loggedCandidates) return;
         loggedCandidates = true;
-        StringBuilder text = new StringBuilder("AlmaLens spoiler candidates:");
+        StringBuilder text = new StringBuilder("AlmaZoom spoiler candidates:");
         collect(decor, text, new int[1]);
         XposedBridge.log(text.toString());
     }
@@ -216,7 +216,7 @@ final class ProcessingOverlay {
                     shade.setShader(shader);
                 } catch (RuntimeException | LinkageError error) {
                     shader = null;
-                    XposedBridge.log("AlmaLens spoiler shader unavailable, using plain dots: " + error);
+                    XposedBridge.log("AlmaZoom spoiler shader unavailable, using plain dots: " + error);
                 }
             }
             Random random = new Random(7);

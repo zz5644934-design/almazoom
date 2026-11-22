@@ -75,12 +75,12 @@ final class PreviewFrameRate {
                     if (choices.isEmpty()) return;
                     if (!reportedChoices) {
                         reportedChoices = true;
-                        XposedBridge.log("AlmaLens preview FPS options: " + choices);
+                        XposedBridge.log("AlmaZoom preview FPS options: " + choices);
                     }
                     hookSubmit(cameraSession.getClass());
                     active.set(new Flight(cameraSession, choices, new IdentityHashMap<>()));
                 } catch (Throwable failure) {
-                    XposedBridge.log("AlmaLens preview FPS: " + failure);
+                    XposedBridge.log("AlmaZoom preview FPS: " + failure);
                 }
             }
 
@@ -141,12 +141,12 @@ final class PreviewFrameRate {
             }
             flight.requests().put(original, alternatives);
         } catch (Throwable failure) {
-            XposedBridge.log("AlmaLens preview FPS builder: " + failure);
+            XposedBridge.log("AlmaZoom preview FPS builder: " + failure);
         } finally {
             try {
                 builder.set(FPS, before);
             } catch (RuntimeException error) {
-                XposedBridge.log("AlmaLens preview FPS restore: " + error);
+                XposedBridge.log("AlmaZoom preview FPS restore: " + error);
             }
         }
     }
@@ -188,16 +188,16 @@ final class PreviewFrameRate {
                 }
                 p.setResult(result);
                 if (!range.equals(logged.put(flight.session(), range))) {
-                    XposedBridge.log("AlmaLens preview FPS requested: " + range);
+                    XposedBridge.log("AlmaZoom preview FPS requested: " + range);
                 }
                 return;
             } catch (InvocationTargetException e) {
                 Throwable cause = e.getCause();
                 if (!(cause instanceof CameraAccessException || cause instanceof RuntimeException)) throw e;
                 ceilings.put(flight.session(), range.getUpper() - 1);
-                XposedBridge.log("AlmaLens preview FPS rejected " + range + ": " + cause);
+                XposedBridge.log("AlmaZoom preview FPS rejected " + range + ": " + cause);
             } catch (IllegalAccessException | IllegalArgumentException e) {
-                XposedBridge.log("AlmaLens preview FPS fallback: " + e);
+                XposedBridge.log("AlmaZoom preview FPS fallback: " + e);
                 return;
             }
         }

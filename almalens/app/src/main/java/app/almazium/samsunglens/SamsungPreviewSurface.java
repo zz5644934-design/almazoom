@@ -79,7 +79,7 @@ final class SamsungPreviewSurface {
             throw new IllegalStateException("PREVIEW_SURFACE_POSITION_CALLBACK_MISSING");
         }
         if (previous == null) {
-            XposedBridge.log("AlmaLens " + BuildConfig.VERSION_NAME + " PREVIEW_SURFACE_CROP_SUBMITTED "
+            XposedBridge.log("AlmaZoom " + BuildConfig.VERSION_NAME + " PREVIEW_SURFACE_CROP_SUBMITTED "
                     + width + "x" + height + " source=" + w + "x" + h + " factor=" + factor);
         }
         return true;

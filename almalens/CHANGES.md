@@ -1,3 +1,16 @@
+# 0.16.0
+
+Zoom only. The module is now just the zoom; the visual extras of 0.14-0.15 are switched off.
+
+- Kept: zoom up to 1000x, the magnifier in the camera quick settings, zoom restore, JPEG and draft crop, the gallery
+  spoiler while a photo is processed (`GalleryHooks`, `ProcessingMarker`), the compact zoom labels on the buttons.
+- Removed: the liquid glass and the glint on the zoom scale (`updateGlass` returns at once, the scroll glint is no
+  longer started), the colored focus ring (`installFocusHooks` is not called), the 60 fps preview
+  (`PreviewFrameRate` is not installed) and its checkbox in the settings dialog.
+- Renamed AlmaLens to AlmaZoom in the app name, descriptions, theme, dialog title and log lines. The settings key
+  `almalens_zoom1000` and the marker folder `DCIM/.almalens` keep their names so that nothing stored earlier is lost.
+- versionCode 29, versionName 0.16.0.
+
 # 0.15.1
 
 - The gallery spoiler no longer relies on Samsung's `isPostProcessing` flag: that flag lives inside the JPEG
@@ -65,6 +78,6 @@ Fixes found in a code review of 0.14.
 - The crop factor locked at shutter time also survives `createCaptureInfo` running on another thread (1.5 s window).
 - The module polls every 400 ms instead of 220 ms while the camera is not in the photo mode.
 - UI texts follow the system language (Russian or English).
-- Log prefixes, theme and thread names use AlmaLens instead of AlmaZoom.
+- Log prefixes, theme and thread names use AlmaZoom instead of AlmaZoom.
 
 Not changed: `FocusRing` still redraws every frame while the ring is visible (needed for the rotation animation).

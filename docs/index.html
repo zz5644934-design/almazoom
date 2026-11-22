@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AlmaZoom — 1000× zoom for Samsung Camera</title>
+<meta name="description" content="AlmaZoom is a Vector/LSPosed module that extends the stock Samsung Camera zoom up to 1000× digital zoom on the Galaxy S25 Ultra (One UI 9, Camera 17.0.00.43). Free, open source. Зум 1000× для камеры Samsung.">
+<link rel="canonical" href="https://zz5644934-design.github.io/almazoom/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AlmaZoom — 1000× zoom for Samsung Camera">
+<meta property="og:description" content="Extend the stock Samsung Camera zoom up to 1000× digital zoom. Vector/LSPosed module, open source.">
+<meta property="og:url" content="https://zz5644934-design.github.io/almazoom/">
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#16181d; --muted:#5b6170; --accent:#2a5bd7; --card:#f3f5fa; --line:#dde1ec; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0f1115; --fg:#eceef3; --muted:#9aa1b2; --accent:#7ea2ff; --card:#181b22; --line:#2a2f3a; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.15; margin: 0 0 12px; }
+  h2 { margin: 40px 0 8px; font-size: 1.3rem; }
+  p, li { color: var(--fg); }
+  .lead { color: var(--muted); font-size: 1.1rem; }
+  .btn { display:inline-block; margin: 8px 8px 0 0; padding: 12px 20px; border-radius: 10px; background: var(--accent); color:#fff; text-decoration:none; font-weight:600; }
+  .btn.alt { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  .note { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin-top: 16px; }
+  a { color: var(--accent); }
+  code { background: var(--card); padding: 1px 6px; border-radius: 5px; }
+  footer { margin-top: 48px; color: var(--muted); font-size: .9rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>AlmaZoom — 1000× zoom for Samsung Camera</h1>
+  <p class="lead">A Vector / LSPosed module that extends the zoom slider of the stock Samsung Camera up to 1000× digital zoom in rear Photo mode.</p>
+  <a class="btn" href="https://github.com/zz5644934-design/almazoom/releases/latest">Download APK</a>
+  <a class="btn alt" href="https://github.com/zz5644934-design/almazoom">Source on GitHub</a>
+
+  <div class="note">
+    <strong>Please note:</strong> this is a digital crop. The module enlarges the center of the preview and crops the processed JPEG, it does not add optical detail. It needs root and Vector. Tested on the Galaxy S25 Ultra with Samsung Camera 17.0.00.43 only.
+  </div>
+
+  <h2>What it does</h2>
+  <ul>
+    <li>Zoom up to 1000× inside the stock camera, with a magnifier button in the camera quick settings.</li>
+    <li>Restores your last zoom when the camera is opened again.</li>
+    <li>Crops the JPEG and the draft that the gallery shows, so there is no jump in the framing.</li>
+    <li>Shows a spoiler animation in the gallery while a photo is still being processed.</li>
+    <li>Compact zoom labels on the buttons (for example 538×).</li>
+  </ul>
+
+  <h2>Install</h2>
+  <ol>
+    <li>You need a rooted phone with <a href="https://github.com/JingMatrix/Vector">Vector</a> already set up.</li>
+    <li>Download the APK from the <a href="https://github.com/zz5644934-design/almazoom/releases/latest">latest release</a> and install it. If a module with another signature is installed, uninstall it first.</li>
+    <li>In Vector enable AlmaZoom for <code>com.sec.android.app.camera</code>. For the gallery spoiler also enable it for <code>com.sec.android.gallery3d</code>.</li>
+    <li>Turn off HEIF and Motion Photo in the camera settings, fully close the camera and open it again, then tap the magnifier.</li>
+  </ol>
+
+  <h2>Compatibility</h2>
+  <p>Galaxy S25 Ultra (SM-S938U1), One UI 9, Samsung Camera 17.0.00.43: checked. Other models and camera versions: untested, reports are welcome in <a href="https://github.com/zz5644934-design/almazoom/issues">GitHub issues</a>. An older build for One UI 8.0 (Camera 16.0.00.66) and a Xiaomi Camera beta are on the <a href="https://github.com/zz5644934-design/almazoom/releases">releases page</a>.</p>
+
+  <h2 lang="ru">По-русски</h2>
+  <div lang="ru">
+    <p>AlmaZoom — модуль Vector/LSPosed, который расширяет зум штатной камеры Samsung до 1000× цифрового зума в режиме «Фото» задней камеры.</p>
+    <p><strong>Важно:</strong> это цифровой кроп, оптического улучшения деталей нет. Нужен root и Vector. Проверено только на Galaxy S25 Ultra, Samsung Camera 17.0.00.43.</p>
+    <ol>
+      <li>Скачай APK в <a href="https://github.com/zz5644934-design/almazoom/releases/latest">последнем релизе</a> и установи как обычное приложение.</li>
+      <li>В Vector включи AlmaZoom для камеры Samsung (<code>com.sec.android.app.camera</code>), для спойлера ещё и для галереи (<code>com.sec.android.gallery3d</code>).</li>
+      <li>Выключи HEIF и «Фото в движении», полностью закрой камеру, открой заново и нажми лупу в быстрых настройках.</li>
+    </ol>
+  </div>
+
+  <footer>AlmaZoom is open source, see the <a href="https://github.com/zz5644934-design/almazoom">repository</a>. Not affiliated with Samsung.</footer>
+</main>
+</body>
+</html>

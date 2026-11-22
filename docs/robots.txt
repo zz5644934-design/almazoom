@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# Pages: https://zz5644934-design.github.io/almazoom/

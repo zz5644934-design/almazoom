@@ -126,7 +126,7 @@ public final class CameraModule implements IXposedHookLoadPackage {
     private final Map<Long, CropShot> shots = new ConcurrentHashMap<>();
     private final Map<File, Long> postOutputs = new ConcurrentHashMap<>();
     private final ScheduledExecutorService galleryWorker = Executors.newSingleThreadScheduledExecutor(task -> {
-        Thread thread = new Thread(task, "AlmaLens gallery");
+        Thread thread = new Thread(task, "AlmaZoom gallery");
         thread.setDaemon(true);
         return thread;
     });
@@ -211,12 +211,12 @@ public final class CameraModule implements IXposedHookLoadPackage {
                 try {
                     surfaceZoom16 = new SamsungPreviewSurface();
                 } catch (ReflectiveOperationException | LinkageError | RuntimeException unavailable) {
-                    XposedBridge.log("AlmaLens PREVIEW_SURFACE_UNAVAILABLE " + unavailable);
+                    XposedBridge.log("AlmaZoom PREVIEW_SURFACE_UNAVAILABLE " + unavailable);
                 }
             } else {
                 verifyProfile(loader, camera);
             }
-            XposedBridge.log("AlmaLens " + BuildConfig.VERSION_NAME + " CAMERA_PROFILE_READY "
+            XposedBridge.log("AlmaZoom " + BuildConfig.VERSION_NAME + " CAMERA_PROFILE_READY "
                     + (camera16 ? "16" : "17"));
             try {
                 Class<?> haptic = findClass(symbol("l9.o", INTERFACES + "CameraContext$HapticPattern"), loader);
@@ -236,12 +236,7 @@ public final class CameraModule implements IXposedHookLoadPackage {
                         photoHooksAttempted = true;
                         installPhotoHooks(loader);
                         installWheelHooks(loader);
-                        installFocusHooks(loader);
-                        try {
-                            new PreviewFrameRate().install(loader, CameraModule.this::canBoostPreview);
-                        } catch (Throwable error) {
-                            log(error);
-                        }
+                        // 0.16.0: the focus ring and the 60 fps preview are not installed (zoom only)
                     }
                     if (!photoHookReady || !wheelHookReady) return;
                     if (current != null) current.stop();
@@ -263,7 +258,7 @@ public final class CameraModule implements IXposedHookLoadPackage {
                 }
             });
         } catch (Throwable error) {
-            XposedBridge.log("AlmaLens " + BuildConfig.VERSION_NAME + " CAMERA_PROFILE_UNAVAILABLE " + error);
+            XposedBridge.log("AlmaZoom " + BuildConfig.VERSION_NAME + " CAMERA_PROFILE_UNAVAILABLE " + error);
         }
     }
 
@@ -372,7 +367,7 @@ public final class CameraModule implements IXposedHookLoadPackage {
                 }
             });
             wheelHookReady = true;
-            XposedBridge.log("AlmaLens " + BuildConfig.VERSION_NAME + " ZOOM_WHEEL_HOOKS_READY");
+            XposedBridge.log("AlmaZoom " + BuildConfig.VERSION_NAME + " ZOOM_WHEEL_HOOKS_READY");
         } catch (Throwable error) {
             log(error);
         }
@@ -457,7 +452,7 @@ public final class CameraModule implements IXposedHookLoadPackage {
                 }
             });
             photoHookReady = true;
-            XposedBridge.log("AlmaLens " + BuildConfig.VERSION_NAME + " JPEG_HOOKS_READY");
+            XposedBridge.log("AlmaZoom " + BuildConfig.VERSION_NAME + " JPEG_HOOKS_READY");
         } catch (Throwable error) {
             log(error);
         }
@@ -702,12 +697,12 @@ public final class CameraModule implements IXposedHookLoadPackage {
     }
 
     private static void trace(long stamp, String stage, String details) {
-        XposedBridge.log("AlmaLens " + BuildConfig.VERSION_NAME + " shot=" + Long.toUnsignedString(stamp, 36)
+        XposedBridge.log("AlmaZoom " + BuildConfig.VERSION_NAME + " shot=" + Long.toUnsignedString(stamp, 36)
                 + " " + stage + (details.isEmpty() ? "" : " " + details));
     }
 
     private static void log(Throwable error) {
-        XposedBridge.log("AlmaLens: " + error);
+        XposedBridge.log("AlmaZoom: " + error);
     }
 
     private int readSetting(Object settings, String key) {
@@ -898,7 +893,6 @@ public final class CameraModule implements IXposedHookLoadPackage {
                 if (widget != scroller(zoomView) || !(widget instanceof HorizontalScrollView scroll)
                         || !sliderVisible(scroll) || getBooleanField(widget, "m") || !ordinaryResolution(settings)) return;
                 updateGlass(binding(zoomView));
-                zoomGlint.duringScroll(distance);
             } catch (RuntimeException | LinkageError failure) {
                 if (!glassUnavailable) log(failure);
                 glassUnavailable = true;
@@ -945,7 +939,11 @@ public final class CameraModule implements IXposedHookLoadPackage {
             requestedRefresh = 0f;
         }
 
+        /** The liquid glass and the glint on the zoom scale are off in 0.16.0 (zoom only). */
+        private static final boolean GLASS_ENABLED = false;
+
         private void updateGlass(Object binding) {
+            if (!GLASS_ENABLED) return;
             Object candidate = getObjectField(binding, "i");
             if (!(candidate instanceof View bar) || !bar.isShown() || bar.getAlpha() < 0.05f) {
                 hideGlass();
@@ -1007,7 +1005,7 @@ public final class CameraModule implements IXposedHookLoadPackage {
             if (!supportsPreviewCrop(preview)) {
                 if (camera16 && preview != null && !reportedMissingPreviewBuffer) {
                     reportedMissingPreviewBuffer = true;
-                    XposedBridge.log("AlmaLens " + BuildConfig.VERSION_NAME + " PREVIEW_BUFFER_UNAVAILABLE");
+                    XposedBridge.log("AlmaZoom " + BuildConfig.VERSION_NAME + " PREVIEW_BUFFER_UNAVAILABLE");
                 }
                 return;
             }
@@ -1035,7 +1033,7 @@ public final class CameraModule implements IXposedHookLoadPackage {
             alignWheel = true;
             restore = null;
             savedZoom = null;
-            XposedBridge.log("AlmaLens zoom restored to " + format(saved.ratio()) + "x");
+            XposedBridge.log("AlmaZoom zoom restored to " + format(saved.ratio()) + "x");
         }
 
         private boolean sliderVisible(HorizontalScrollView scroll) {
@@ -1183,14 +1181,7 @@ public final class CameraModule implements IXposedHookLoadPackage {
             });
             content.addView(extended, new LinearLayout.LayoutParams(-1, -2));
 
-            CheckBox fps = new CheckBox(activity);
-            fps.setText(Ui.text("Превью 60 к/с (выдержка подстраивается под свет)", "60 fps preview (exposure still adapts to light)"));
-            fps.setChecked(options.getBoolean(FAST_PREVIEW, true));
-            fps.setOnCheckedChangeListener((button, enabled) ->
-                    options.edit().putBoolean(FAST_PREVIEW, enabled).apply());
-            content.addView(fps, new LinearLayout.LayoutParams(-1, -2));
-
-            dialog = new AlertDialog.Builder(activity).setTitle("AlmaLens")
+            dialog = new AlertDialog.Builder(activity).setTitle("AlmaZoom")
                     .setView(content).setPositiveButton(Ui.text("Готово", "Done"), null).create();
             dialog.show();
         }
@@ -1247,7 +1238,7 @@ public final class CameraModule implements IXposedHookLoadPackage {
             if (previewCrop == null || previewCrop.view != preview) {
                 if (previewCrop != null) previewCrop.restore();
                 previewCrop = new PreviewCrop(preview);
-                XposedBridge.log("AlmaLens " + BuildConfig.VERSION_NAME + " PREVIEW_CROP_READY "
+                XposedBridge.log("AlmaZoom " + BuildConfig.VERSION_NAME + " PREVIEW_CROP_READY "
                         + preview.getClass().getSimpleName());
             }
             return previewCrop.apply(factor);
@@ -1317,7 +1308,7 @@ public final class CameraModule implements IXposedHookLoadPackage {
             wheelRetryAt = now + WHEEL_RETRY_MS;
             log(error);
             if (wheelFaults >= MAX_WHEEL_FAULTS) {
-                XposedBridge.log("AlmaLens: zoom wheel disabled until the camera is reopened");
+                XposedBridge.log("AlmaZoom: zoom wheel disabled until the camera is reopened");
             }
             try {
                 resetCrop();
