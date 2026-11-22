@@ -1,4 +1,6 @@
-# AlmaZoom · цифровой зум до 1000×
+# AlmaZoom (AlmaLens) · цифровой зум до 1000× в камере Samsung
+
+Website: https://zz5644934-design.github.io/almazoom/
 
 **[Скачать оригинальную сборку Samsung для One UI 8.5+ (Camera 17.0.00.43)](https://github.com/zz5644934-design/almazoom/releases/download/v0.15.1/AlmaLens-0.15.1.apk)** · [English](README.md)
 

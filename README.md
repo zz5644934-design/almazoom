@@ -1,4 +1,6 @@
-# AlmaZoom · 1000× Zoom for Samsung Camera
+# AlmaZoom (AlmaLens) · 1000× Zoom for Samsung Camera
+
+Website: https://zz5644934-design.github.io/almazoom/
 
 AlmaZoom extends the zoom slider in the stock Samsung Camera app up to **1000× digital zoom**. It works as a Vector module in the rear camera's Photo mode with JPEG.
 

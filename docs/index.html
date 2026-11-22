@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AlmaZoom — 1000× zoom for Samsung Camera (AlmaLens)</title>
+<meta name="description" content="AlmaZoom (AlmaLens) is a Vector/LSPosed module that extends the stock Samsung Camera zoom slider up to 1000× digital zoom. Galaxy S25 Ultra, One UI 8/9. Free, open source.">
+<meta name="keywords" content="AlmaZoom, AlmaLens, Samsung Camera 1000x zoom, Galaxy S25 Ultra zoom mod, Vector module, LSPosed camera, One UI 9">
+<link rel="canonical" href="https://zz5644934-design.github.io/almazoom/">
+<meta property="og:title" content="AlmaZoom — 1000× zoom for Samsung Camera">
+<meta property="og:description" content="Vector/LSPosed module: extend the stock Samsung Camera slider to 1000× digital zoom.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://zz5644934-design.github.io/almazoom/">
+<style>
+:root{--bg:#0e1116;--fg:#e8ebf0;--mut:#9aa4b2;--acc:#4cc2ff;--card:#171c24}
+@media(prefers-color-scheme:light){:root{--bg:#fff;--fg:#14181f;--mut:#566070;--acc:#0a6cc4;--card:#f3f5f8}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,sans-serif}
+main{max-width:760px;margin:0 auto;padding:48px 16px}
+h1{font-size:2.4rem;margin:0 0 8px}h2{margin-top:40px}p.lead{color:var(--mut);font-size:1.15rem}
+a{color:var(--acc)}.btn{display:inline-block;background:var(--acc);color:#fff;padding:12px 20px;border-radius:10px;text-decoration:none;font-weight:600;margin:6px 8px 6px 0}
+.card{background:var(--card);padding:16px 20px;border-radius:12px;margin:12px 0}
+table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid var(--card);padding:8px;text-align:left}
+</style>
+</head>
+<body><main>
+<h1>AlmaZoom</h1>
+<p class="lead">Extend the Samsung Camera zoom slider up to <b>1000×</b>. A Vector / LSPosed module, also known as AlmaLens.</p>
+<a class="btn" href="https://github.com/zz5644934-design/almazoom/releases/download/v0.15.1/AlmaLens-0.15.1.apk">Download AlmaLens 0.15.1 (One UI 9)</a>
+<a class="btn" href="https://github.com/zz5644934-design/almazoom">GitHub</a>
+
+<h2>How it works</h2>
+<p>Samsung Camera shoots and processes the photo at its own maximum zoom. AlmaZoom enlarges the preview and crops the processed JPEG around the same center before it reaches Gallery. This is digital zoom (a crop), not optics: expect more detail than the stock limit allows only where the sensor resolved it. Output is capped at 2048 px on the longest edge.</p>
+
+<h2>Requirements</h2>
+<div class="card">Rooted Android device with <a href="https://github.com/JingMatrix/Vector">Vector</a> set up. Rear camera, Photo mode, JPEG (HEIF off).</div>
+
+<h2>Downloads</h2>
+<table>
+<tr><th>Build</th><th>Camera</th></tr>
+<tr><td><a href="https://github.com/zz5644934-design/almazoom/releases/download/v0.15.1/AlmaLens-0.15.1.apk">AlmaLens 0.15.1</a> (One UI 9)</td><td>Samsung 17.0.00.43</td></tr>
+<tr><td><a href="https://github.com/zz5644934-design/almazoom/releases/download/v1.1.3-beta5/AlmaZoom-v1.1.3-beta5.apk">AlmaZoom 1.1.3 beta 5</a> (One UI 8.0)</td><td>Samsung 16.0.00.66</td></tr>
+<tr><td><a href="https://github.com/zz5644934-design/almazoom/releases/download/v1.1.3-xiaomi-beta1/AlmaZoom-v1.1.3-xiaomi-beta1.apk">Xiaomi beta</a></td><td>Xiaomi Camera 6.3.007270.1</td></tr>
+</table>
+
+<h2>Install</h2>
+<ol><li>Install the APK.</li><li>Enable it in Vector, scope: Samsung Camera (<code>com.sec.android.app.camera</code>).</li><li>Fully close and reopen Camera.</li><li>Scroll the zoom slider past the stock limit.</li></ol>
+
+<h2>Русский</h2>
+<p>AlmaZoom — модуль Vector, расширяющий цифровой зум в камере Samsung до 1000×. Нужен root. <a href="https://github.com/zz5644934-design/almazoom/blob/main/README.ru.md">Инструкция на русском</a>.</p>
+
+<p style="color:var(--mut);margin-top:40px">Open source. Report device tests in <a href="https://github.com/zz5644934-design/almazoom/issues">Issues</a>.</p>
+</main></body></html>
