@@ -2,7 +2,7 @@
 
 AlmaZoom extends the zoom slider in the stock Samsung Camera app up to **1000× digital zoom**. It works as a Vector module in the rear camera's Photo mode with JPEG.
 
-**[Download original Samsung build for One UI 8.5+ (Camera 17.0.00.43)](https://github.com/zz5644934-design/almazoom/releases/download/v1.1.2/AlmaZoom-v1.1.2.apk)** · [Русская версия](README.ru.md)
+**[Download AlmaLens 0.15.1 for One UI 9 (Camera 17.0.00.43)](https://github.com/zz5644934-design/almazoom/releases/download/v0.15.1/AlmaLens-0.15.1.apk)** · [Русская версия](README.ru.md)
 
 **[Download One UI 8.0 beta 5 (Camera 16.0.00.66)](https://github.com/zz5644934-design/almazoom/releases/download/v1.1.3-beta5/AlmaZoom-v1.1.3-beta5.apk)**
 

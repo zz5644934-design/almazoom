@@ -1,6 +1,6 @@
 # AlmaZoom · цифровой зум до 1000×
 
-**[Скачать оригинальную сборку Samsung для One UI 8.5+ (Camera 17.0.00.43)](https://github.com/zz5644934-design/almazoom/releases/download/v1.1.2/AlmaZoom-v1.1.2.apk)** · [English](README.md)
+**[Скачать оригинальную сборку Samsung для One UI 8.5+ (Camera 17.0.00.43)](https://github.com/zz5644934-design/almazoom/releases/download/v0.15.1/AlmaLens-0.15.1.apk)** · [English](README.md)
 
 **[Скачать бету 5 для One UI 8.0 (Camera 16.0.00.66)](https://github.com/zz5644934-design/almazoom/releases/download/v1.1.3-beta5/AlmaZoom-v1.1.3-beta5.apk)**
 
