@@ -65,6 +65,5 @@ Fixes found in a code review of 0.14.
 - The crop factor locked at shutter time also survives `createCaptureInfo` running on another thread (1.5 s window).
 - The module polls every 400 ms instead of 220 ms while the camera is not in the photo mode.
 - UI texts follow the system language (Russian or English).
-- Log prefixes, theme and thread names use AlmaLens instead of AlmaZoom.
 
 Not changed: `FocusRing` still redraws every frame while the ring is visible (needed for the rotation animation).

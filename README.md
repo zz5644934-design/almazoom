@@ -1,10 +1,10 @@
-# AlmaZoom (AlmaLens) · 1000× Zoom for Samsung Camera
+# AlmaZoom · 1000× Zoom for Samsung Camera
 
 Website: https://zz5644934-design.github.io/almazoom/
 
 AlmaZoom extends the zoom slider in the stock Samsung Camera app up to **1000× digital zoom**. It works as a Vector module in the rear camera's Photo mode with JPEG.
 
-**[Download AlmaLens 0.15.1 for One UI 9 (Camera 17.0.00.43)](https://github.com/zz5644934-design/almazoom/releases/download/v0.15.1/AlmaLens-0.15.1.apk)** · [Русская версия](README.ru.md)
+**[Download AlmaZoom 0.15.1 for One UI 9 (Camera 17.0.00.43)](https://github.com/zz5644934-design/almazoom/releases/download/v0.15.1/AlmaLens-0.15.1.apk)** · [Русская версия](README.ru.md)
 
 **[Download One UI 8.0 beta 5 (Camera 16.0.00.66)](https://github.com/zz5644934-design/almazoom/releases/download/v1.1.3-beta5/AlmaZoom-v1.1.3-beta5.apk)**
 
@@ -55,6 +55,6 @@ Photograph a fixed subject at the stock maximum, then at twice that value on the
 - `CROPPED_BEFORE_PUBLICATION` confirms the module cropped the JPEG.
 - `SAMSUNG_SCAN_RETURNED uriPresent=true` confirms Samsung's scanner returned an image URI.
 
-## AlmaLens (newer, One UI 9)
+## One UI 9 build (newer)
 
-[`almalens`](almalens) combines the AlmaLens effects with the AlmaZoom zoom logic in one module for Samsung Camera on One UI 9. Zoom to 1000x, 60 fps preview, the draft that the gallery shows is cropped like the final photo, and the gallery fades in a spoiler while a photo is still being processed. See [`almalens/CHANGES.md`](almalens/CHANGES.md).
+[`almalens`](almalens) combines the earlier effects with the zoom logic in one module for Samsung Camera on One UI 9. Zoom to 1000x, 60 fps preview, the draft that the gallery shows is cropped like the final photo, and the gallery fades in a spoiler while a photo is still being processed. See [`almalens/CHANGES.md`](almalens/CHANGES.md).

@@ -60,7 +60,7 @@ final class GalleryHooks {
                     try {
                         onPage(p.thisObject, p.args[0]);
                     } catch (Throwable error) {
-                        XposedBridge.log("AlmaLens gallery spoiler: " + error);
+                        XposedBridge.log("AlmaZoom gallery spoiler: " + error);
                     }
                 }
             };
@@ -70,9 +70,9 @@ final class GalleryHooks {
                 hooked += hookIfDeclared(holder, hook, "onBind", item, int.class);
                 hooked += hookIfDeclared(holder, hook, "invalidate", item, int.class, item, int.class);
             }
-            XposedBridge.log("AlmaLens gallery hooks ready (" + hooked + " methods)");
+            XposedBridge.log("AlmaZoom gallery hooks ready (" + hooked + " methods)");
         } catch (Throwable error) {
-            XposedBridge.log("AlmaLens gallery hooks unavailable: " + error);
+            XposedBridge.log("AlmaZoom gallery hooks unavailable: " + error);
         }
     }
 
@@ -109,7 +109,7 @@ final class GalleryHooks {
         boolean marked = ProcessingMarker.isSet(name);
         if (debugLines < MAX_DEBUG_LINES && (marked || debugLines < 4)) {
             debugLines++;
-            XposedBridge.log("AlmaLens gallery page " + name + " marker=" + marked);
+            XposedBridge.log("AlmaZoom gallery page " + name + " marker=" + marked);
         }
         Active active = ACTIVE.get(page);
         if (active != null && !active.name.equals(name)) {
@@ -144,7 +144,7 @@ final class GalleryHooks {
             }
         };
         HANDLER.postDelayed(active.poll, POLL_MS);
-        XposedBridge.log("AlmaLens gallery spoiler shown for " + name + " " + page.getWidth() + "x" + page.getHeight()
+        XposedBridge.log("AlmaZoom gallery spoiler shown for " + name + " " + page.getWidth() + "x" + page.getHeight()
                 + " shader=" + drawable.usesShader());
     }
 
@@ -155,6 +155,6 @@ final class GalleryHooks {
         active.drawable.stop();
         active.parent.getOverlay().remove(active.drawable);
         if (Build.VERSION.SDK_INT >= 31) page.setRenderEffect(null);
-        XposedBridge.log("AlmaLens gallery spoiler hidden for " + active.name);
+        XposedBridge.log("AlmaZoom gallery spoiler hidden for " + active.name);
     }
 }

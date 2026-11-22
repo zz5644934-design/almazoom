@@ -7,7 +7,7 @@ Check each subreddit's self-promotion rules before posting. Attach before/after 
 **Title:** Made a Vector module that extends Samsung Camera zoom to 1000x (S25 Ultra, One UI 9), samples inside
 
 **Body:**
-I built AlmaZoom (AlmaLens), a free open-source module that extends the stock Samsung Camera zoom slider up to 1000x.
+I built AlmaZoom, a free open-source module that extends the stock Samsung Camera zoom slider up to 1000x.
 
 How it works: Camera shoots and processes at its own max, then the module crops the processed JPEG around the same center as the enlarged preview. So it's digital zoom, not magic optics. Detail past the stock limit depends on what the sensor resolved. Output is capped at 2048 px on the long edge.
 

@@ -1,4 +1,4 @@
-# AlmaZoom (AlmaLens) · цифровой зум до 1000× в камере Samsung
+# AlmaZoom · цифровой зум до 1000× в камере Samsung
 
 Website: https://zz5644934-design.github.io/almazoom/
 

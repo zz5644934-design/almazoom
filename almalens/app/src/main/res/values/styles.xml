@@ -1,5 +1,5 @@
 <resources>
-    <style name="Theme.AlmaLens.Base" parent="android:style/Theme.Material.NoActionBar">
+    <style name="Theme.AlmaZoom.Base" parent="android:style/Theme.Material.NoActionBar">
         <item name="android:windowBackground">@android:color/black</item>
         <item name="android:statusBarColor">@android:color/black</item>
         <item name="android:navigationBarColor">@android:color/black</item>
@@ -7,5 +7,5 @@
         <item name="android:windowLightNavigationBar">false</item>
         <item name="android:colorAccent">@android:color/white</item>
     </style>
-    <style name="Theme.AlmaLens" parent="Theme.AlmaLens.Base" />
+    <style name="Theme.AlmaZoom" parent="Theme.AlmaZoom.Base" />
 </resources>

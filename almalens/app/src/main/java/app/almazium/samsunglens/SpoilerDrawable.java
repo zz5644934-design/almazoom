@@ -35,7 +35,7 @@ final class SpoilerDrawable extends Drawable {
                 shade.setShader(shader);
             } catch (RuntimeException | LinkageError error) {
                 shader = null;
-                XposedBridge.log("AlmaLens gallery spoiler shader unavailable: " + error);
+                XposedBridge.log("AlmaZoom gallery spoiler shader unavailable: " + error);
             }
         }
     }

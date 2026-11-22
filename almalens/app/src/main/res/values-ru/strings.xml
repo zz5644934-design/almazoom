@@ -1,5 +1,5 @@
 <resources>
-    <string name="module_description">Эффекты AlmaLens и цифровой зум до 1000× для камеры Samsung</string>
+    <string name="module_description">Эффекты AlmaZoom и цифровой зум до 1000× для камеры Samsung</string>
     <string name="open_camera">Открыть камеру</string>
     <string name="camera_unavailable">Не удалось открыть камеру.</string>
 </resources>
