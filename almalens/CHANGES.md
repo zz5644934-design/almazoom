@@ -4,9 +4,8 @@ Zoom only. The module is now just the zoom; the visual extras of 0.14-0.15 are s
 
 - Kept: zoom up to 1000x, the magnifier in the camera quick settings, zoom restore, JPEG and draft crop, the gallery
   spoiler while a photo is processed (`GalleryHooks`, `ProcessingMarker`), the compact zoom labels on the buttons.
-- Removed: the liquid glass and the glint on the zoom scale (`updateGlass` returns at once, the scroll glint is no
-  longer started), the colored focus ring (`installFocusHooks` is not called), the 60 fps preview
-  (`PreviewFrameRate` is not installed) and its checkbox in the settings dialog.
+- Removed (the code is deleted, not just switched off): the liquid glass and the glint on the zoom scale, the colored
+  focus ring, the 60 fps preview with its checkbox in the settings dialog, and the 120 Hz window request.
 - Renamed AlmaLens to AlmaZoom in the app name, descriptions, theme, dialog title and log lines. The settings key
   `almalens_zoom1000` and the marker folder `DCIM/.almalens` keep their names so that nothing stored earlier is lost.
 - versionCode 29, versionName 0.16.0.

@@ -2,11 +2,6 @@ package app.almazium.samsunglens;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.view.Display;
-import android.view.WindowManager;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.content.ContentValues;
@@ -54,7 +49,6 @@ import static de.robv.android.xposed.XposedHelpers.getObjectField;
 import static de.robv.android.xposed.XposedHelpers.getStaticObjectField;
 import static de.robv.android.xposed.XposedHelpers.removeAdditionalInstanceField;
 import static de.robv.android.xposed.XposedHelpers.setAdditionalInstanceField;
-import static de.robv.android.xposed.XposedHelpers.setObjectField;
 
 public final class CameraModule implements IXposedHookLoadPackage {
     private static final String PACKAGE = "com.sec.android.app.camera";
@@ -110,8 +104,6 @@ public final class CameraModule implements IXposedHookLoadPackage {
     private static final int UNIT = 1000;
     private static final int LIMIT = ZoomMath.LIMIT;
     private static final long LENS_CAMERA_VERSION = 1700043000L;
-    /** 60 fps preview is on by default; the range keeps auto exposure free, see PreviewFrameRate. */
-    private static final String FAST_PREVIEW = "high_fps_preview";
     private static final String LEGACY_FAST_PREVIEW = "experimental_fast_preview";
     private static final String OPTIONS = "almazium_lens_options";
     private static final String EXTEND_ZOOM = "extend_zoom";
@@ -236,7 +228,7 @@ public final class CameraModule implements IXposedHookLoadPackage {
                         photoHooksAttempted = true;
                         installPhotoHooks(loader);
                         installWheelHooks(loader);
-                        // 0.16.0: the focus ring and the 60 fps preview are not installed (zoom only)
+
                     }
                     if (!photoHookReady || !wheelHookReady) return;
                     if (current != null) current.stop();
@@ -262,42 +254,6 @@ public final class CameraModule implements IXposedHookLoadPackage {
         }
     }
 
-    private boolean canBoostPreview() {
-        Panel panel = current;
-        if (panel == null) return false;
-        Activity activity = panel.activity;
-        if (!activity.getSharedPreferences(OPTIONS, 0).getBoolean(FAST_PREVIEW, true)) return false;
-        Object provider = shootingModeProvider(activity);
-        Object cameraSettings = cameraSettingsOf(activity);
-        return provider != null && cameraSettings != null
-                && isPhotoMode(provider)
-                && facing(cameraSettings) == 0
-                && ordinaryResolution(cameraSettings)
-                && readSetting(cameraSettings, "MOTION_PHOTO") == 0
-                && readSetting(cameraSettings, "QUICK_TAKE_RECORDING_STATUS") == 0;
-    }
-
-    private void installFocusHooks(ClassLoader loader) {
-        try {
-            Class<?> aeAfGroup = findClass(
-                    "com.sec.android.app.camera.layer.previewoverlay.aeaf.AeAfGroup", loader);
-            findAndHookMethod(aeAfGroup, "m", new XC_MethodHook() {
-                @Override protected void afterHookedMethod(MethodHookParam p) {
-                    Panel panel = current;
-                    if (panel == null || p.hasThrowable()) return;
-                    try {
-                        View circle = (View) callMethod(p.thisObject, "getAeAfCircle");
-                        panel.colorFocusRing(circle);
-                    } catch (Throwable error) {
-                        log(error);
-                    }
-                }
-            });
-        } catch (Throwable error) {
-            log(error);
-        }
-    }
-
     private void installWheelHooks(ClassLoader loader) {
         try {
             Class<?> scroller = findClass(symbol("y9.g", SCROLLER_16), loader);
@@ -309,7 +265,6 @@ public final class CameraModule implements IXposedHookLoadPackage {
                     try {
                         int x = (Integer) p.args[1];
                         int previous = (Integer) p.args[3];
-                        panel.animateLensScroll(p.thisObject, x - previous);
                         if (panel.scrollZoom(p.thisObject, x, previous)) {
                             p.setResult(null);
                         }
@@ -731,12 +686,7 @@ public final class CameraModule implements IXposedHookLoadPackage {
         long restoreUntil;
         ProcessingOverlay processing;
         final ToolbarIcon toolbar;
-        final ZoomGlint zoomGlint = new ZoomGlint();
-        LiquidZoomGlass zoomGlass;
-        FocusRing focusRing;
         AlertDialog dialog;
-        boolean glassUnavailable;
-        float originalRefresh, requestedRefresh;
         volatile DigitalZoom digitalZoom;
         final SharedPreferences options;
         ZoomWheel wheel;
@@ -777,24 +727,6 @@ public final class CameraModule implements IXposedHookLoadPackage {
             if (processing != null) processing.hide();
         }
 
-        void colorFocusRing(View circle) {
-            Object provider = shootingModeProvider(activity);
-            Object cameraSettings = cameraSettingsOf(activity);
-            if (circle == null || circle.getVisibility() != View.VISIBLE
-                    || circle.getRootView() != activity.getWindow().getDecorView()
-                    || provider == null || cameraSettings == null || !activity.hasWindowFocus()
-                    || !isPhotoMode(provider)
-                    || facing(cameraSettings) != 0
-                    || readSetting(cameraSettings, "QUICK_TAKE_RECORDING_STATUS") != 0) return;
-            Drawable background = circle.getBackground();
-            if (background == null) return;
-            if (!(background instanceof FocusRing)) {
-                if (focusRing != null) focusRing.restore();
-                focusRing = new FocusRing(circle, background);
-                circle.setBackground(focusRing);
-            }
-        }
-
         @Override public void run() {
             if (current != this) return;
             try {
@@ -802,7 +734,6 @@ public final class CameraModule implements IXposedHookLoadPackage {
                 lastError = null;
             } catch (Throwable error) {
                 recoverWheel(error);
-                hideLensEffects();
                 toolbar.hide();
                 String description = error.toString();
                 if (!description.equals(lastError)) log(error);
@@ -839,7 +770,6 @@ public final class CameraModule implements IXposedHookLoadPackage {
             if (zoomView != view) {
                 resetCrop();
                 removeWheel();
-                hideGlass();
                 zoomView = view;
             }
             Object binding = binding(zoomView);
@@ -853,7 +783,6 @@ public final class CameraModule implements IXposedHookLoadPackage {
                     : "PREVIEWING".equals(name(getObjectField(engine, "B")));
             if (!previewing) return;
             if (!view.isShown() && digitalZoom == null) { hideZoom(); return; }
-            refreshLensEffects(binding);
             if (!digitalConfigured()) {
                 disableDigitalZoom();
                 return;
@@ -870,99 +799,6 @@ public final class CameraModule implements IXposedHookLoadPackage {
                 alignWheel = false;
             }
             wheelWasVisible = wheelVisible;
-        }
-
-        private void refreshLensEffects(Object binding) {
-            if (!ordinaryResolution(settings)) {
-                hideLensEffects();
-                return;
-            }
-            try {
-                requestSmoothDisplay();
-                updateGlass(binding);
-            } catch (RuntimeException | LinkageError failure) {
-                if (!glassUnavailable) log(failure);
-                glassUnavailable = true;
-                hideGlass();
-            }
-        }
-
-        private void animateLensScroll(Object widget, int distance) {
-            if (zoomView == null || distance == 0 || (wheel != null && wheel.positioning)) return;
-            try {
-                if (widget != scroller(zoomView) || !(widget instanceof HorizontalScrollView scroll)
-                        || !sliderVisible(scroll) || getBooleanField(widget, "m") || !ordinaryResolution(settings)) return;
-                updateGlass(binding(zoomView));
-            } catch (RuntimeException | LinkageError failure) {
-                if (!glassUnavailable) log(failure);
-                glassUnavailable = true;
-                hideGlass();
-            }
-        }
-
-        private void hideLensEffects() {
-            hideGlass();
-            restoreDisplay();
-            if (focusRing != null) {
-                focusRing.restore();
-                focusRing = null;
-            }
-        }
-
-        private void requestSmoothDisplay() {
-            if (requestedRefresh > 0f) return;
-            Display display = activity.getDisplay();
-            WindowManager.LayoutParams attributes = activity.getWindow().getAttributes();
-            if (display == null || attributes.preferredDisplayModeId != 0) return;
-            Display.Mode currentMode = display.getMode();
-            float best = 0f;
-            for (Display.Mode mode : display.getSupportedModes()) {
-                float rate = mode.getRefreshRate();
-                if (mode.getPhysicalWidth() == currentMode.getPhysicalWidth()
-                        && mode.getPhysicalHeight() == currentMode.getPhysicalHeight()
-                        && rate <= 120.1f && rate > best) best = rate;
-            }
-            if (best < 90f || attributes.preferredRefreshRate >= best) return;
-            originalRefresh = attributes.preferredRefreshRate;
-            requestedRefresh = best;
-            attributes.preferredRefreshRate = best;
-            activity.getWindow().setAttributes(attributes);
-        }
-
-        private void restoreDisplay() {
-            if (requestedRefresh == 0f) return;
-            WindowManager.LayoutParams attributes = activity.getWindow().getAttributes();
-            if (attributes.preferredRefreshRate == requestedRefresh) {
-                attributes.preferredRefreshRate = originalRefresh;
-                activity.getWindow().setAttributes(attributes);
-            }
-            requestedRefresh = 0f;
-        }
-
-        /** The liquid glass and the glint on the zoom scale are off in 0.16.0 (zoom only). */
-        private static final boolean GLASS_ENABLED = false;
-
-        private void updateGlass(Object binding) {
-            if (!GLASS_ENABLED) return;
-            Object candidate = getObjectField(binding, "i");
-            if (!(candidate instanceof View bar) || !bar.isShown() || bar.getAlpha() < 0.05f) {
-                hideGlass();
-                return;
-            }
-            if (Build.VERSION.SDK_INT < 33 || glassUnavailable) return;
-            try {
-                if (zoomGlass == null) zoomGlass = new LiquidZoomGlass(handler, zoomGlint);
-                zoomGlass.show(bar, findPreview());
-            } catch (RuntimeException | LinkageError error) {
-                if (zoomGlass != null) zoomGlass.stop();
-                glassUnavailable = true;
-                log(error);
-            }
-        }
-
-        private void hideGlass() {
-            zoomGlint.clear();
-            if (zoomGlass != null) zoomGlass.stop();
         }
 
         private boolean digitalConfigured() {
@@ -1275,7 +1111,6 @@ public final class CameraModule implements IXposedHookLoadPackage {
         }
 
         private void hideZoom() {
-            hideLensEffects();
             disableDigitalZoom();
         }
 
