@@ -2,11 +2,11 @@
 
 AlmaZoom extends the zoom slider in the stock Samsung Camera app up to **1000× digital zoom**. It works as a Vector module in the rear camera's Photo mode with JPEG.
 
-**[Download original Samsung build for One UI 8.5+ (Camera 17.0.00.43)](https://github.com/zz5644934-design/almazoom-x1000/releases/download/v1.1.2/AlmaZoom-v1.1.2.apk)** · [Русская версия](README.ru.md)
+**[Download original Samsung build for One UI 8.5+ (Camera 17.0.00.43)](https://github.com/zz5644934-design/almazoom/releases/download/v1.1.2/AlmaZoom-v1.1.2.apk)** · [Русская версия](README.ru.md)
 
-**[Download One UI 8.0 beta 5 (Camera 16.0.00.66)](https://github.com/zz5644934-design/almazoom-x1000/releases/download/v1.1.3-beta5/AlmaZoom-v1.1.3-beta5.apk)**
+**[Download One UI 8.0 beta 5 (Camera 16.0.00.66)](https://github.com/zz5644934-design/almazoom/releases/download/v1.1.3-beta5/AlmaZoom-v1.1.3-beta5.apk)**
 
-**[Download Xiaomi Camera beta](https://github.com/zz5644934-design/almazoom-x1000/releases/download/v1.1.3-xiaomi-beta1/AlmaZoom-v1.1.3-xiaomi-beta1.apk)**
+**[Download Xiaomi Camera beta](https://github.com/zz5644934-design/almazoom/releases/download/v1.1.3-xiaomi-beta1/AlmaZoom-v1.1.3-xiaomi-beta1.apk)**
 
 Requires a rooted Android device with [Vector](https://github.com/JingMatrix/Vector) already set up.
 
@@ -24,7 +24,7 @@ Targets Xiaomi Camera **6.3.007270.1 (630072701)** on Android 13 or later. Phone
 
 ## Install
 
-1. Install the [AlmaZoom APK](https://github.com/zz5644934-design/almazoom-x1000/releases/download/v1.1.3-beta5/AlmaZoom-v1.1.3-beta5.apk).
+1. Install the [AlmaZoom APK](https://github.com/zz5644934-design/almazoom/releases/download/v1.1.3-beta5/AlmaZoom-v1.1.3-beta5.apk).
 2. Enable **AlmaZoom** in Vector and set its scope to **Samsung Camera** (`com.sec.android.app.camera`).
 3. Fully close Samsung Camera and reopen it. In **Photo**, use the rear camera and JPEG, such as the standard 12 MP setting with HEIF off.
 4. Open the zoom slider and scroll past the stock limit. The magnifier in Camera's quick controls toggles extended zoom.
@@ -52,3 +52,7 @@ Photograph a fixed subject at the stock maximum, then at twice that value on the
 - `CAMERA_PROFILE_UNAVAILABLE` reports an incompatible camera profile.
 - `CROPPED_BEFORE_PUBLICATION` confirms the module cropped the JPEG.
 - `SAMSUNG_SCAN_RETURNED uriPresent=true` confirms Samsung's scanner returned an image URI.
+
+## AlmaLens (newer, One UI 9)
+
+[`almalens`](almalens) combines the AlmaLens effects with the AlmaZoom zoom logic in one module for Samsung Camera on One UI 9. Zoom to 1000x, 60 fps preview, the draft that the gallery shows is cropped like the final photo, and the gallery fades in a spoiler while a photo is still being processed. See [`almalens/CHANGES.md`](almalens/CHANGES.md).

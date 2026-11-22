@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name" translatable="false">AlmaLens</string>
+    <string name="module_description">AlmaLens effects and digital zoom up to 1000× for Samsung Camera</string>
+    <string name="open_camera">Open Camera</string>
+    <string name="camera_unavailable">Camera could not be opened.</string>
+    <string-array name="module_scope" translatable="false">
+        <item>com.sec.android.app.camera</item>
+        <item>com.sec.android.gallery3d</item>
+    </string-array>
+</resources>
