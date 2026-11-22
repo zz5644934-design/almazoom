@@ -8,7 +8,7 @@ The latest published releases at the time this policy was added are:
 
 | Release | Channel | Intended target |
 | --- | --- | --- |
-| `v1.1.2` | Stable | Samsung Camera 17.0.00.43 / One UI 8.5+ |
+| `v0.16.0` | Latest | Samsung Camera 17.0.00.43 / One UI 9 (zoom only) |
 | `v1.1.3-beta5` | Beta | Samsung Camera 16.0.00.66 / One UI 8.0 |
 | `v1.1.3-xiaomi-beta1` | Experimental beta | Xiaomi Camera 6.3.007270.1 |
 
